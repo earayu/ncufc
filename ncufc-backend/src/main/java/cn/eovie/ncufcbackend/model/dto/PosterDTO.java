@@ -1,24 +1,24 @@
-package cn.eovie.ncufcbackend.model;
+package cn.eovie.ncufcbackend.model.dto;
 
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
 /**
+ *
+ * 主页海报
+ *
  * Created by earayu on 2017/11/27.
  */
 @Data
 @ToString
-@Document(collection = "post")
-public class PostDO {
+public class PosterDTO {
 
     /**
      * 主键
      */
-    @Id
     private int id;
 
     /**
