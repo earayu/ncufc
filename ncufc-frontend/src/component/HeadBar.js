@@ -9,12 +9,10 @@ const componentStyle = {
     }
 }
 
-const HeadBar = observer(class HeadBar extends Component{
+@observer class HeadBar extends Component{
 
-    constructor(){
-        super();
-        this.state = {open: false}
-    }
+
+
 
     render(){
         return (
@@ -23,12 +21,11 @@ const HeadBar = observer(class HeadBar extends Component{
                 title="My AppBar"
                 style={componentStyle.appBar}
                 onLeftIconButtonTouchTap={()=>{
-                    alert(this.props.store.clicking)
-                    this.props.store.clicking = true
+                    this.props.store.uiStore.showSidebar = true
                 }}
             />
         );
     }
-})
+}
 
 export default HeadBar;
