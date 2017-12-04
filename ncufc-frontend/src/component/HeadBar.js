@@ -18,7 +18,7 @@ const componentStyle = {
         return (
             <AppBar
                 className="appBar"
-                title="My AppBar"
+                title="信工FC"
                 style={componentStyle.appBar}
                 onLeftIconButtonTouchTap={()=>{
                     this.props.store.uiStore.showSidebar = true

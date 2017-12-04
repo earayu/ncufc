@@ -17,7 +17,7 @@ class Content extends Component{
     showSelectedContent(){
         if(this.props.store.uiStore.selectMenu==='主页海报'){
             return (
-                <PosterUpload/>
+                <PosterUpload store={this.props.store}/>
             )
         }
     }
