@@ -6,6 +6,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+const PIC_BOX_WIDTH = 600
+const PIC_BOX_HEIGHT = 400
+
 const style = {
     height: 800,
     width: 1000,
@@ -16,14 +19,15 @@ const style = {
 };
 
 const picbox = {
-    width: 600,
-    height: 400,
+    width: PIC_BOX_WIDTH,
+    height: PIC_BOX_HEIGHT,
     display: 'flex',
     borderStyle: 'dashed',
     borderWidth: '5px',
     borderColor: '#AAAAAA',
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
 }
 
 const formStyle = {
@@ -40,31 +44,57 @@ class PosterUpload extends Component{
         super();
         this.menuItenName = "主页海报";
         this.addPics = this.addPics.bind(this);
+        this.file = {};
     }
 
     addPics(){
         if(this.props.store.uiStore.picInBox===false){
             return (
-                <form id="uploadForm" enctype="multipart/form-data">
-                    <input id="file" type="file" name="file"/>
-                    <button id="upload" type="button">upload</button>
-                </form>
-                /*<FloatingActionButton disabled={false}>*/
-                    /*<ContentAdd id="posterPicker"/>*/
-                /*</FloatingActionButton>*/
+                <div>
+                    <FloatingActionButton containerElement='label' // <-- Just add me!
+                        label='My Label'
+                        disabled={false}>
+                        <ContentAdd id="posterPicker" />
+                        <input type="file"  style={{display: 'none'}} onChange={this.handleClick.bind(this)}  />
+                    </FloatingActionButton>
+                </div>
             )
-        }else {
-            return (
-                <div>123</div>
-            )
+        }else {//TODO 添加取消图片按钮
+            var reader = new FileReader();//创建一个读取文件对象reader
+            reader.readAsDataURL(this.file);
+            reader.onload = function() {//文件读取成功后 打印出数据结果，
+                var box = document.getElementById("picbox")
+                var img = document.createElement("img")
+                img.src = reader.result
+                img.width = PIC_BOX_WIDTH
+                box.appendChild(img)
+            }
         }
+    }
+
+    handleClick(e) {
+        this.file = e.target.files[0]
+        this.props.store.uiStore.picInBox = true
+    }
+
+    handleUpload(){
+        let form = new FormData();
+        form.append('poster', this.file, this.file.name)
+        form.append('name', 'earayu')
+        fetch("http://localhost:8080/api/v1/manage/poster",
+            {
+                method: 'POST',
+                body: form
+            }
+
+        )
     }
 
     render(){
         return (
             <Paper style={style} zDepth={5} >
                 <div style={formStyle}>
-                    <div style={picbox}>
+                    <div id="picbox" style={picbox}>
                         {this.addPics()}
                     </div>
                     <div >
@@ -87,6 +117,7 @@ class PosterUpload extends Component{
                         labelPosition="before"
                         primary={true}
                         style={{width: '260px'}}
+                        onClick={this.handleUpload.bind(this)}
                     />
                 </div>
             </Paper>
