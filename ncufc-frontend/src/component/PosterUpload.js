@@ -81,6 +81,7 @@ class PosterUpload extends Component{
         let form = new FormData();
         form.append('poster', this.file, this.file.name)
         form.append('name', 'earayu')
+        form.append('postUser', 'earayu')
         fetch("http://localhost:8080/api/v1/manage/poster",
             {
                 method: 'POST',
