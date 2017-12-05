@@ -1,0 +1,13 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://ncufc_dba:wewewe@139.199.61.39:22934/ncufc
+
+
+cos:
+  appId: 1255545788
+  secretId: AKID76tdDosp4MTOD0M0MYcaUO7e0BDAurcC
+  secretKey: Wr14HPOBqKBsW3QenpalspaAe3377xa9
+  bucketName: ncufc
+  reigon: sh
+  cosPath: /pics
