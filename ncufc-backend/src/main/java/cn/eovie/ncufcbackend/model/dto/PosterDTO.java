@@ -1,5 +1,6 @@
 package cn.eovie.ncufcbackend.model.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
@@ -13,6 +14,7 @@ import java.util.Date;
  * Created by earayu on 2017/11/27.
  */
 @Data
+@Builder
 @ToString
 public class PosterDTO {
 
@@ -24,12 +26,12 @@ public class PosterDTO {
     /**
      * 发布时间
      */
-    private Date postTime;
+    private Date postTime = new Date();
 
     /**
      * 是否被删除
      */
-    private boolean deleted;
+    private boolean deleted = false;
 
     /**
      * 上传人
