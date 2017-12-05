@@ -28,7 +28,8 @@ public enum  ExceptionCode {
 
 
     COS_ERROR("30000", "cos参数错误", "cos参数错误"),
-    UPLOAD_ERROR("30001", "上传图片失败")
+    UPLOAD_ERROR("30001", "上传图片失败"),
+    UPLOAD_TIMEOUT("30002", "图片上传超时，请重试")
 
 
 

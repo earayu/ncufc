@@ -27,7 +27,6 @@ public class CosManager {
     @Autowired
     private CosConfig cosConfig;
 
-    //TODO 返回成功与否、URL
     public Optional<String> upload(byte[] bytes){
         try {
 
@@ -42,8 +41,10 @@ public class CosManager {
 
         CosResponse cosResponse = new Gson().fromJson(result, CosResponse.class);
 
-        if(!cosResponse.getCode().equals("0")){//TODO 细分网络异常和参数异常
+        if(cosResponse.getCode().equals("-1")){//TODO 细分网络异常和参数异常
             throw new SpecificException(ExceptionCode.UPLOAD_ERROR);
+        }else if(cosResponse.getCode().equals("-2") || cosResponse.getCode().equals("-3")){
+            throw new SpecificException(ExceptionCode.UPLOAD_TIMEOUT);
         }
 
         return Optional.of(cosResponse.getData().getSourceUrl());
