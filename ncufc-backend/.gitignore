@@ -14,7 +14,7 @@ target/
 *.iws
 *.iml
 *.ipr
-src/main/resources/*.yml
+src/main/resources/application.yml
 
 ### NetBeans ###
 nbproject/private/
