@@ -1,8 +1,9 @@
 package cn.eovie.ncufcbackend.manager;
 
 import cn.eovie.ncufcbackend.dao.PosterDao;
+import cn.eovie.ncufcbackend.exception.CodeException;
 import cn.eovie.ncufcbackend.exception.ExceptionCode;
-import cn.eovie.ncufcbackend.exception.SpecificException;
+import cn.eovie.ncufcbackend.exception.ExceptedException;
 import cn.eovie.ncufcbackend.model.domain.PosterDO;
 import cn.eovie.ncufcbackend.model.domain.Result;
 import cn.eovie.ncufcbackend.model.dto.PosterDTO;
@@ -17,6 +18,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
+import static cn.eovie.ncufcbackend.exception.ExceptionUtils.throwFlyingException;
 
 /**
  * Created by earayu on 2017/11/27.
@@ -42,10 +45,10 @@ public class PosterManager {
                     .build();
             posterDao.insert(BaseConveter.convertObject(posterDTO, PosterDO.class));
             return Result.success();
-        }catch (SpecificException e){
+        }catch (ExceptedException e){
             throw e;
         }catch (Exception e){
-            throw new SpecificException(ExceptionCode.UPLOAD_ERROR, e.getMessage());
+            throw new CodeException(e);
         }
     }
 
@@ -56,7 +59,7 @@ public class PosterManager {
             return baos.toByteArray();
         } catch (IOException e) {
             log.error("压缩图片失败:{}", e.getMessage());
-            throw new SpecificException(ExceptionCode.COMPRESS_ERROR);
+            throw new CodeException(ExceptionCode.COMPRESS_ERROR);
         }
     }
 

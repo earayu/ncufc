@@ -4,32 +4,39 @@ import com.google.gson.Gson;
 import lombok.Data;
 
 /**
- * 00000        成功
- * 10000-19999  自己系统异常
- * 20000-29999  中间（网络）服务气场
- * 30000-39999  业务原因异常
- * 40000-49999
- * 50000-59999  对方服务异常
+ * TODO
+ * 1. 检查code不重复方法，自动运行
+ * 2. 导出方法，生成错误字典
  * Created by earayu on 2017/12/5.
  */
 public enum  ExceptionCode {
 
     SUCCESS("00000", "处理成功", "处理成功"),
-    FLYING_ERROR("10001", "系统繁忙", "未捕获异常"),
-
-    COMPRESS_ERROR("10010","压缩图片异常"),
-
-
+    FLYING_ERROR("10001", "系统繁忙", "非期待异常"),
+    WRONG_THROW("10002", "异常代码使用错误", "在一个异常中使用了不属于它的异常代码"),
+    UNEXCEPTED_ERROR("10003", "系统繁忙", "未捕获异常, 非自定义异常类型"),
 
 
+
+    COMPRESS_ERROR("10100","压缩图片异常"),
+
+
+
+
+
+
+    UPLOAD_TIMEOUT("20000", "图片上传超时，请重试"),
 
 
 
 
 
     COS_ERROR("30000", "cos参数错误", "cos参数错误"),
-    UPLOAD_ERROR("30001", "上传图片失败"),
-    UPLOAD_TIMEOUT("30002", "图片上传超时，请重试")
+
+
+
+
+    UPLOAD_ERROR("50000", "上传图片失败")
 
 
 

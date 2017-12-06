@@ -1,5 +1,6 @@
 package cn.eovie.ncufcbackend.controller;
 
+import cn.eovie.ncufcbackend.exception.*;
 import cn.eovie.ncufcbackend.manager.CosManager;
 import cn.eovie.ncufcbackend.manager.NotificationManager;
 import cn.eovie.ncufcbackend.manager.PlayerManager;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static cn.eovie.ncufcbackend.constant.HTTPHeader.APPLICATION_JSON;
+import static cn.eovie.ncufcbackend.exception.ExceptionUtils.throwServiceException;
 
 /**
  * 管理后台，配置接口
@@ -66,6 +68,12 @@ public class ConfigurationController {
     @GetMapping(value = "/notification", produces = APPLICATION_JSON)
     public NotificationDTO findLatest(){
         return notificationManager.findLatest();
+    }
+
+    //TODO 删掉
+    @GetMapping(value = "/health")
+    public String health(){
+        throw new LogicalException(ExceptionCode.UPLOAD_ERROR);
     }
 
 

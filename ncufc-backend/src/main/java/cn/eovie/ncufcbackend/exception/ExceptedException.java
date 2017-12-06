@@ -7,21 +7,19 @@ import lombok.Data;
  * Created by earayu on 2017/12/5.
  */
 @Data
-public class SpecificException  extends RuntimeException{
+public abstract class ExceptedException extends RuntimeException{
 
-    private static final long serialVersionUID = -8334632928705029986L;
+    protected String code;
 
-    private String code;
+    protected String message;
 
-    private String message;
-
-    private String reason;
+    protected String reason;
 
     /**
      * 可以确定问题的异常，code、message、reason都是我预定义的
      * @param exceptionCode
      */
-    public SpecificException(ExceptionCode exceptionCode){
+    public ExceptedException(ExceptionCode exceptionCode){
         super();
         this.code = exceptionCode.getCode();
         this.message = exceptionCode.getMessage();
@@ -36,11 +34,15 @@ public class SpecificException  extends RuntimeException{
      * @param exceptionCode
      * @param reason
      */
-    public SpecificException(ExceptionCode exceptionCode, String reason){
+    public ExceptedException(ExceptionCode exceptionCode, String reason){
         super();
         this.code = exceptionCode.getCode();
         this.message = exceptionCode.getMessage();
         this.reason = reason;
+    }
+
+    public ExceptedException(Throwable cause) {
+        super(cause);
     }
 
 

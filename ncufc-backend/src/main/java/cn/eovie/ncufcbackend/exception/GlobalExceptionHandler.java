@@ -6,11 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import static cn.eovie.ncufcbackend.exception.ExceptionCode.FLYING_ERROR;
+import static cn.eovie.ncufcbackend.exception.ExceptionCode.UNEXCEPTED_ERROR;
 
 /**
- * Created by linyang on 2017/5/23.
+ * Created by earayu on 2017/5/23.
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -26,14 +25,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result exp(Exception ex) {
-        if (ex instanceof SpecificException) {
-            String code = ((SpecificException) ex).getCode();
-            String messge = ((SpecificException) ex).getMessage();
-            String reason = ((SpecificException) ex).getReason();
-            logger.error("特定异常。code:{},message:{},reason:{} ", code, messge, reason);
+        if (ex instanceof ExceptedException) {
+            String code = ((ExceptedException) ex).getCode();
+            String messge = ((ExceptedException) ex).getMessage();
+            String reason = ((ExceptedException) ex).getReason();
+            if(ex instanceof CodeException){
+                logger.error("CodeException. code:{},message:{},reason:{}", code, messge, reason, ex);
+            }else {
+                logger.error("特定异常。code:{},message:{},reason:{}", code, messge, reason);
+            }
             return Result.fail(code, messge,reason);
         }
         logger.error("系统异常。ex:{}", ex);
-        return Result.fail(FLYING_ERROR.getCode(), ex.getMessage(), FLYING_ERROR.getReason());
+        return Result.fail(UNEXCEPTED_ERROR.getCode(), ex.getMessage(), UNEXCEPTED_ERROR.getReason());
     }
+
 }

@@ -12,4 +12,5 @@ public class NcufcBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(NcufcBackendApplication.class, args);
 	}
+
 }
