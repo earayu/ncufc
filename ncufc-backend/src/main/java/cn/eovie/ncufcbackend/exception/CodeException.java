@@ -27,4 +27,13 @@ public class CodeException extends ExceptedException {
         this.reason = cause.getMessage();
         this.cause = cause;
     }
+
+    @Override
+    public Throwable getCause() {
+        return cause;
+    }
+
+    public void setCause(Throwable cause) {
+        this.cause = cause;
+    }
 }

@@ -8,5 +8,5 @@ class RootStore {
 }
 
 let rootStore = new RootStore();
-
+window.store = rootStore.uiStore
 export default rootStore;

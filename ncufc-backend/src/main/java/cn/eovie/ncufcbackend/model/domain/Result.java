@@ -11,7 +11,7 @@ import static cn.eovie.ncufcbackend.exception.ExceptionCode.SUCCESS;
  */
 @Data
 @Builder
-public class Result {
+public class Result<T> {
 
     private boolean success;
 
@@ -21,8 +21,10 @@ public class Result {
 
     private String reason;
 
-    public static Result success(){
-        return Result.builder().success(true).code(SUCCESS.getCode()).message(SUCCESS.getMessage()).reason(SUCCESS.getReason()).build();
+    private T data;
+
+    public static<T> Result success(T data){
+        return Result.builder().success(true).code(SUCCESS.getCode()).message(SUCCESS.getMessage()).reason(SUCCESS.getReason()).data(new Gson().toJson(data)).build();
     }
 
     public static Result fail(String code, String message, String reason){

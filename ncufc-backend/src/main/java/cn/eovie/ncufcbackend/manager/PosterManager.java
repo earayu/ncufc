@@ -16,10 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static cn.eovie.ncufcbackend.exception.ExceptionUtils.throwFlyingException;
 
 /**
  * Created by earayu on 2017/11/27.
@@ -40,11 +40,12 @@ public class PosterManager {
             Optional<String> result = cosManager.upload(compress(file));
             PosterDTO posterDTO = PosterDTO.builder()
                     .name(name)
+                    .postTime(new Date())//TODO 时间字符串
                     .postUser(postUser)
                     .url(result.get())
                     .build();
             posterDao.insert(BaseConveter.convertObject(posterDTO, PosterDO.class));
-            return Result.success();
+            return Result.success(posterDTO);
         }catch (ExceptedException e){
             throw e;
         }catch (Exception e){

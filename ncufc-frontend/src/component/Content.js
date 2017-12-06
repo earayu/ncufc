@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import PosterUpload from "./PosterUpload";
+import PlayerUpload from "./PlayerUpload"
 
 
 
@@ -18,6 +19,10 @@ class Content extends Component{
         if(this.props.store.uiStore.selectMenu==='主页海报'){
             return (
                 <PosterUpload store={this.props.store}/>
+            )
+        }else if(this.props.store.uiStore.selectMenu==='球员信息'){
+            return (
+                <PlayerUpload store={this.props.store}/>
             )
         }
     }

@@ -26,7 +26,7 @@ public class PosterDTO {
     /**
      * 发布时间
      */
-    private Date postTime = new Date();
+    private Date postTime;
 
     /**
      * 是否被删除

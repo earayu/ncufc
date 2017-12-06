@@ -18,12 +18,12 @@ import java.util.Date;
 @Document(collection = "poster")
 public class PosterDO {
 
-    /**
-     * 主键
-     */
-    @Id
-    @NotNull
-    private int id;
+//    /**
+//     * 主键
+//     */
+//    @Id
+//    @NotNull
+//    private int id;
 
     /**
      * 发布时间

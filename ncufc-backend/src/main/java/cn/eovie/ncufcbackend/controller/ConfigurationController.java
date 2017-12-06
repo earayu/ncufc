@@ -17,13 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static cn.eovie.ncufcbackend.constant.HTTPHeader.APPLICATION_JSON;
-import static cn.eovie.ncufcbackend.exception.ExceptionUtils.throwServiceException;
 
 /**
  * 管理后台，配置接口
  * Created by earayu on 2017/11/27.
  */
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/api/v1/manage")
 public class ConfigurationController {
 
@@ -36,8 +36,6 @@ public class ConfigurationController {
     @Autowired
     private NotificationManager notificationManager;
 
-
-    //TODO 最大文件长度
     @PostMapping(value = "/poster", produces = APPLICATION_JSON)
     public Result addPoster(@RequestParam(value = "name") String name,
                             @RequestParam(value = "postUser") String postUser,

@@ -7,9 +7,6 @@ import static cn.eovie.ncufcbackend.exception.ExceptionCode.WRONG_THROW;
  */
 public class ExceptionUtils {
 
-    public static void throwFlyingException(Exception e){
-        throw new CodeException(e);
-    }
 
     public static void throwCodeException(ExceptionCode exceptionCode){
         throw new CodeException(exceptionCode);

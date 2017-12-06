@@ -55,15 +55,15 @@ const dialogStyle = {
 
 
 @observer
-class PosterUpload extends Component{
+class PlayerUpload extends Component{
 
     constructor(){
         super();
-        this.menuItemName = "主页海报";
+        this.menuItemName = "球员信息";
         this.addPics = this.addPics.bind(this);
         this.dialogContent = this.dialogContent.bind(this);
         this.dialogContent2 = this.dialogContent2.bind(this);
-        this.file = {};
+        this.uiStore = this.props.store.uiStore;
     }
 
     addPics(){
@@ -88,9 +88,8 @@ class PosterUpload extends Component{
     }
 
     handleClick(e) {
-        this.file = e.target.files[0]
         var reader = new FileReader();//创建一个读取文件对象reader
-        reader.readAsDataURL(this.file);
+        reader.readAsDataURL(e.target.files[0]);
         const store = this.props.store.uiStore;
         reader.onload = function () {
             store.cachedPic = reader.result
@@ -181,6 +180,9 @@ class PosterUpload extends Component{
                     </div>
                     <div>
                         <TextField id="posterName"  hintText="海报名称" errorText={this.props.store.uiStore.posterNameErrorText} />
+                        <TextField id="posterName"  hintText="海报名称" errorText={this.props.store.uiStore.posterNameErrorText} />
+                        <TextField id="posterName"  hintText="海报名称" errorText={this.props.store.uiStore.posterNameErrorText} />
+                        <TextField id="posterName"  hintText="海报名称" errorText={this.props.store.uiStore.posterNameErrorText} />
                     </div>
                     <div>
                         <Dialog
@@ -223,4 +225,4 @@ class PosterUpload extends Component{
 
 }
 
-export default PosterUpload
+export default PlayerUpload
