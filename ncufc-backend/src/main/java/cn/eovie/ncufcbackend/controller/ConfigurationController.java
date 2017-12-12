@@ -24,7 +24,7 @@ import static cn.eovie.ncufcbackend.constant.HTTPHeader.APPLICATION_JSON;
  */
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(value = "/api/v1/manage")
+//@RequestMapping(value = "/api/v1/manage")
 public class ConfigurationController {
 
     @Autowired
@@ -73,6 +73,11 @@ public class ConfigurationController {
     public String health(){
         throw new LogicalException(ExceptionCode.UPLOAD_ERROR);
     }
+
+//    @GetMapping(value = "/Exploit.class")
+//    public String exploit(){
+//        return "123";
+//    }
 
 
 }
