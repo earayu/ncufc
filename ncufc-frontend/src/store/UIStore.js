@@ -25,7 +25,7 @@ class UIStore{
         //待上传图片
         cachedPic: null,
         posterNameErrorText: "",
-}
+    }
 
     @observable player = {
         //已选图片，在框中显示

@@ -130,7 +130,7 @@ class PosterUpload extends Component{
     }
 
     /**
-     * 2. 校验格式
+     *
      * 3. 前端压缩
      * 上传接口
      */
@@ -138,6 +138,10 @@ class PosterUpload extends Component{
         let textField = document.querySelector("#posterName")
         if(textField.value.trim()===""){
             this.showPreError("海报名称不能为空")
+            return
+        }
+        if(this.file.name.slice(-3).toLowerCase()!=="jpg" && this.file.name.slice(-3).toLowerCase()!=="png"){
+            this.showAlert("只能上传jpg或png格式的图片！")
             return
         }
 
@@ -162,10 +166,8 @@ class PosterUpload extends Component{
 
     /*
     * TODO
-    * 逻辑：
-    * 1. 点击上传图片出现转菊花，上传按钮变灰
-    * 2. 上传完成弹出dialog，上传按钮可点
-    * 3. 校验name，相同不能上传
+    * 1. 获取当前注册用户
+    * 2. 后台校验name，相同不能上传
     * */
 
     dialogContent(){
