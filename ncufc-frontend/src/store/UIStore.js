@@ -13,15 +13,26 @@ class UIStore{
     @observable menuList = ["主页海报", "球员信息"];
     //当前选择菜单选项
     @observable selectMenu = "";
-    //已选图片，在框中显示
-    @observable picInBox = false;
-    @observable alertMsg = "";
-    //正在上传
-    @observable uploading = false;
-    //待上传图片
-    @observable cachedPic = null;
 
-    @observable posterNameErrorText = ""
+
+
+    //添加海报页面
+    @observable addPoster = {
+        picInBox: false,
+        alertMsg: "",
+        //正在上传
+        uploading: false,
+        //待上传图片
+        cachedPic: null,
+        posterNameErrorText: "",
+}
+
+    @observable player = {
+        //已选图片，在框中显示
+
+
+    }
+
 
     @computed get showDialog(){
         return this.uploading || this.alertMsg !== ""

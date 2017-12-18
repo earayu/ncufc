@@ -67,7 +67,7 @@ class PosterUpload extends Component{
     }
 
     addPics(){
-        if(this.props.store.uiStore.picInBox===false){
+        if(this.ui.picInBox===false){
             return (
                 <div>
                     <FloatingActionButton containerElement='label' // <-- Just add me!
@@ -78,10 +78,10 @@ class PosterUpload extends Component{
                     </FloatingActionButton>
                 </div>
             )
-        }else {//TODO 添加取消图片按钮
+        }else {
             return (
                 <div style={{position: 'relative'}}>
-                    <img className="img" width={PIC_BOX_WIDTH} src={this.props.store.uiStore.cachedPic} />
+                    <img className="img" width={PIC_BOX_WIDTH} src={this.ui.cachedPic} />
                 </div>
             )
         }
@@ -93,48 +93,70 @@ class PosterUpload extends Component{
         reader.readAsDataURL(this.file);
         const store = this.props.store.uiStore;
         reader.onload = function () {
-            store.cachedPic = reader.result
+            store.addPoster.cachedPic = reader.result
         };
-        this.props.store.uiStore.picInBox = true
+        this.ui.picInBox = true
     }
 
     handleCancelPic(){
-        this.props.store.uiStore.picInBox = false
-        this.props.store.uiStore.cachedPic = null
+        this.clearAll()
+    }
+
+    clearAll(){
+        this.ui.picInBox= false;
+        this.ui.alertMsg= "";
+        this.ui.uploading= false;
+        this.ui.cachedPic= null;
+        this.ui.posterNameErrorText= "";
+        document.querySelector("#posterName").value = ""
+    }
+
+    showUpload(){
+        this.ui.uploading = true;
+        this.ui.alertMsg = "";
+        this.ui.posterNameErrorText = "";
+    }
+
+    showAlert(msg){
+        this.ui.posterNameErrorText = ""
+        this.ui.alertMsg = msg
+        this.ui.uploading = false
+    }
+
+    showPreError(msg){
+        this.ui.posterNameErrorText = msg
+        this.ui.alertMsg = ""
+        this.ui.uploading = false
     }
 
     /**
-     * 上传
+     * 2. 校验格式
+     * 3. 前端压缩
+     * 上传接口
      */
     handleUpload(){
-        this.props.store.uiStore.uploading = true;
-        let form = new FormData();
-        form.append('poster', this.file, this.file.name)
-        let textField = document.getElementById("posterName")
-        if(textField.value===""){
-            this.props.store.uiStore.posterNameErrorText = "海报名称不能为空！"
-            this.props.store.uiStore.uploading = false
+        let textField = document.querySelector("#posterName")
+        if(textField.value.trim()===""){
+            this.showPreError("海报名称不能为空")
             return
         }
-        this.props.store.uiStore.posterNameErrorText = ""
+
+        this.showUpload()
+        let form = new FormData()
+        form.append('poster', this.file)
         form.append('name', textField.value)
         form.append('postUser', 'earayu')//TODO 获取当前注册用户
-        fetch("http://localhost:8080/api/v1/manage/poster",
+        fetch( this.config.BASE_URL + "/api/v1/manage/poster",
             {
                 method: 'POST',
                 body: form
             }
-        ).then(resp=>{
-            this.props.store.uiStore.uploading = false;
-            if(resp.ok){
-                return resp.json()
-            }else {
-                this.props.store.uiStore.alertMsg = "接口调用异常！"
-            }
-        }).then((j)=>{
-            this.props.store.uiStore.alertMsg = j.message
+        ).then(resp=> {
+            resp.json().then(json=>{
+                this.showAlert(json.message)
+            })
         }).catch((error)=>{
-            this.props.store.uiStore.alertMsg = "接口调用异常！"
+            this.showAlert("接口调用异常！")
         })
     }
 
@@ -147,7 +169,7 @@ class PosterUpload extends Component{
     * */
 
     dialogContent(){
-        if(this.props.store.uiStore.uploading){
+        if(this.ui.uploading){
             return (
                 <div>
                     <CircularProgress size={80} thickness={5} />
@@ -157,47 +179,55 @@ class PosterUpload extends Component{
     }
 
     dialogContent2(){
-        if(this.props.store.uiStore.alertMsg !== ""){
+        if(this.ui.alertMsg !== ""){
             return (
                 <div>
-                    <p>{this.props.store.uiStore.alertMsg}</p>
+                    <p>{this.ui.alertMsg}</p>
                 </div>
             )
         }
     }
 
     handleCloseAlert(){
-        this.props.store.uiStore.alertMsg = ""
+        this.ui.alertMsg = ""
     }
 
 
 
     render(){
+        this.ui = this.props.store.uiStore.addPoster;
+        this.config = this.props.store.config;
         return (
             <Paper style={style} zDepth={5} >
                 <div style={formStyle}>
+
+                    {/*图片框*/}
                     <div id="picbox" style={picbox}>
                         {this.addPics()}
                     </div>
+
+                    {/*海报名称输入框*/}
                     <div>
-                        <TextField id="posterName"  hintText="海报名称" errorText={this.props.store.uiStore.posterNameErrorText} />
+                        <TextField id="posterName"  hintText="海报名称" errorText={this.ui.posterNameErrorText} />
                     </div>
+
+                    {/*转菊花、信息框*/}
                     <div>
-                        <Dialog
-                            open={this.props.store.uiStore.uploading}
-                        >
+                        <Dialog open={this.ui.uploading}>
                             {this.dialogContent()}
                         </Dialog>
                         <Dialog
-                            open={this.props.store.uiStore.alertMsg!==""}
+                            open={this.ui.alertMsg!==""}
                             onRequestClose={this.handleCloseAlert.bind(this)}
                         >
                             {this.dialogContent2()}
                         </Dialog>
                     </div>
+
+                    {/*重置、上传按钮*/}
                     <div>
                         <RaisedButton
-                            disabled={this.props.store.uiStore.uploading}
+                            disabled={this.ui.uploading}
                             label="重置"
                             labelPosition="before"
                             primary={true}
@@ -205,7 +235,7 @@ class PosterUpload extends Component{
                             onClick={this.handleCancelPic.bind(this)}
                         />
                         <RaisedButton
-                            disabled={this.props.store.uiStore.uploading}
+                            disabled={this.ui.uploading}
                             label="上传"
                             labelPosition="before"
                             primary={true}
@@ -213,6 +243,7 @@ class PosterUpload extends Component{
                             onClick={this.handleUpload.bind(this)}
                         />
                     </div>
+
                 </div>
             </Paper>
         )

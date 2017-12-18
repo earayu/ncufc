@@ -22,7 +22,7 @@ class Content extends Component{
             )
         }else if(this.props.store.uiStore.selectMenu==='球员信息'){
             return (
-                <PlayerUpload store={this.props.store}/>
+                {/*<PlayerUpload store={this.props.store}/>*/}
             )
         }
     }
