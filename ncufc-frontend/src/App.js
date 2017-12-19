@@ -6,6 +6,7 @@ import { observer } from 'mobx-react';
 import SideBar from "./component/SideBar";
 import { Link, Route, Switch } from 'react-router-dom';
 import PosterUpload from './component/PosterUpload'
+import Home from './component/Home'
 
 injectTapEventPlugin();
 
@@ -29,6 +30,7 @@ class App extends Component {
                 <SideBar store={this.props.store}/>
                 {/*<Content store={this.props.store}/>*/}
 
+                <Route exact={true} path="/" component={Home}/>
                 <Route path="/PosterUpload" component={PosterUpload}/>
 
             </MuiThemeProvider>

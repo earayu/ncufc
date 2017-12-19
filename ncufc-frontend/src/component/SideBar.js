@@ -3,7 +3,6 @@ import Drawer from 'material-ui/Drawer';
 import { inject,observer } from 'mobx-react';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
-import { Link} from 'react-router-dom';
 import {withRouter} from "react-router-dom";
 
 @withRouter
@@ -17,7 +16,6 @@ class SideBar extends Component{
     }
 
     handleMenuClick(event, item, index){
-        console.log(item.props.value)
         this.props.history.push(item.props.value)
         this.props.rootStore.uiStore.toggleSideBar()
     }

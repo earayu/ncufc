@@ -12,14 +12,20 @@ class UIStore{
     //菜单列表
     @observable menuList = [
         {
+            url: "/",
+            name: "官网主页"
+        },
+        {
             url: "/PosterUpload",
-            name: "主页海报"
+            name: "海报上传"
         },
         {
             url: "PlayerInfo",
             name: "球员信息"
         }
     ];
+
+
     //当前选择菜单选项
     @observable selectMenu = "";
 
@@ -32,9 +38,10 @@ class UIStore{
         //正在上传
         uploading: false,
         //待上传图片
-        cachedPic: null,
         posterNameErrorText: "",
     }
+
+    @observable cachedPic= null;
 
     @observable player = {
         //已选图片，在框中显示

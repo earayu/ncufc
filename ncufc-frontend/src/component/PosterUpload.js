@@ -7,7 +7,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Dialog from 'material-ui/Dialog';
 import CircularProgress from 'material-ui/CircularProgress';
-
+require('../css/main.css');
 
 /**
  * 写前端会不由自主写成烂代码
@@ -81,7 +81,7 @@ class PosterUpload extends Component{
         }else {
             return (
                 <div style={{position: 'relative'}}>
-                    <img className="img" width={PIC_BOX_WIDTH} src={this.ui.cachedPic} />
+                    <img className="img" width={PIC_BOX_WIDTH} src={this.props.rootStore.uiStore.cachedPic} />
                 </div>
             )
         }
@@ -91,9 +91,8 @@ class PosterUpload extends Component{
         this.file = e.target.files[0]
         var reader = new FileReader();//创建一个读取文件对象reader
         reader.readAsDataURL(this.file);
-        const store = this.props.store.uiStore;
-        reader.onload = function () {
-            store.addPoster.cachedPic = reader.result
+        reader.onload = () => {
+            this.props.rootStore.uiStore.cachedPic = reader.result
         };
         this.ui.picInBox = true
     }
@@ -106,9 +105,10 @@ class PosterUpload extends Component{
         this.ui.picInBox= false;
         this.ui.alertMsg= "";
         this.ui.uploading= false;
-        this.ui.cachedPic= null;
+        this.props.rootStore.uiStore.cachedPic= null;
         this.ui.posterNameErrorText= "";
         document.querySelector("#posterName").value = ""
+        this.file = {}
     }
 
     showUpload(){
@@ -136,6 +136,10 @@ class PosterUpload extends Component{
      */
     handleUpload(){
         let textField = document.querySelector("#posterName")
+        if(this.props.rootStore.uiStore.cachedPic===null){
+            this.showAlert("请选择图片！")
+            return
+        }
         if(textField.value.trim()===""){
             this.showPreError("海报名称不能为空")
             return
@@ -168,6 +172,7 @@ class PosterUpload extends Component{
     * TODO
     * 1. 获取当前注册用户
     * 2. 后台校验name，相同不能上传
+    * 3. 未选择图片即可上传的BUG
     * */
 
     dialogContent(){
