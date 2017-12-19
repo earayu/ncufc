@@ -10,7 +10,16 @@ class UIStore{
     //显示菜单
     @observable showSidebar = false;
     //菜单列表
-    @observable menuList = ["主页海报", "球员信息"];
+    @observable menuList = [
+        {
+            url: "/PosterUpload",
+            name: "主页海报"
+        },
+        {
+            url: "PlayerInfo",
+            name: "球员信息"
+        }
+    ];
     //当前选择菜单选项
     @observable selectMenu = "";
 

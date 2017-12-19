@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 
 
 const componentStyle = {
@@ -8,7 +8,7 @@ const componentStyle = {
 
     }
 }
-
+@inject('rootStore')
 @observer class HeadBar extends Component{
 
 
@@ -21,7 +21,7 @@ const componentStyle = {
                 title="信工FC"
                 style={componentStyle.appBar}
                 onLeftIconButtonTouchTap={()=>{
-                    this.props.store.uiStore.showSidebar = true
+                    this.props.rootStore.uiStore.showSidebar = true
                 }}
             />
         );

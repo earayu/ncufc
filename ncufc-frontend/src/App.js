@@ -4,9 +4,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import HeadBar from './component/HeadBar';
 import { observer } from 'mobx-react';
 import SideBar from "./component/SideBar";
-import Content from './component/Content'
-
-
+import { Link, Route, Switch } from 'react-router-dom';
+import PosterUpload from './component/PosterUpload'
 
 injectTapEventPlugin();
 
@@ -28,9 +27,14 @@ class App extends Component {
             <MuiThemeProvider  >
                 <HeadBar store={this.props.store}/>
                 <SideBar store={this.props.store}/>
-                <Content store={this.props.store}/>
+                {/*<Content store={this.props.store}/>*/}
+
+                <Route path="/PosterUpload" component={PosterUpload}/>
+
             </MuiThemeProvider>
-      </div>
+
+
+        </div>
     );
   }
 }

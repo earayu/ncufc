@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -53,7 +53,7 @@ const dialogStyle = {
 }
 
 
-
+@inject('rootStore')
 @observer
 class PosterUpload extends Component{
 
@@ -197,8 +197,8 @@ class PosterUpload extends Component{
 
 
     render(){
-        this.ui = this.props.store.uiStore.addPoster;
-        this.config = this.props.store.config;
+        this.ui = this.props.rootStore.uiStore.addPoster;
+        this.config = this.props.rootStore.config;
         return (
             <Paper style={style} zDepth={5} >
                 <div style={formStyle}>

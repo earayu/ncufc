@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import Drawer from 'material-ui/Drawer';
-import { observer } from 'mobx-react';
+import { inject,observer } from 'mobx-react';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import { Link} from 'react-router-dom';
+import {withRouter} from "react-router-dom";
 
-
-
+@withRouter
+@inject("rootStore")
 @observer
 class SideBar extends Component{
 
@@ -15,14 +17,19 @@ class SideBar extends Component{
     }
 
     handleMenuClick(event, item, index){
-        this.props.store.uiStore.selectMenu = item.props.children
-        this.props.store.uiStore.toggleSideBar()
+        console.log(item.props.value)
+        this.props.history.push(item.props.value)
+        this.props.rootStore.uiStore.toggleSideBar()
     }
 
     getMenuList(){
         return (
-            this.props.store.uiStore.menuList.map((m)=>{
-                return <MenuItem>{m}</MenuItem>
+            this.props.rootStore.uiStore.menuList.map((m)=>{
+                return (
+                        <MenuItem value={m.url}>
+                            {m.name}
+                        </MenuItem>
+                )
             })
         )
     }
@@ -32,10 +39,10 @@ class SideBar extends Component{
             <Drawer
                 docked={false}
                 width={200}
-                open={this.props.store.uiStore.showSidebar}
+                open={this.props.rootStore.uiStore.showSidebar}
                 onRequestChange={
                     open => {
-                        this.props.store.uiStore.toggleSideBar()
+                        this.props.rootStore.uiStore.toggleSideBar()
                     }
                 }
             >
@@ -46,5 +53,6 @@ class SideBar extends Component{
         );
     }
 }
+
 
 export default SideBar;
