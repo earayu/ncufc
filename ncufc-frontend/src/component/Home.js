@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import ReactSwipe from 'react-swipe';
 
 
 const bannerbox = {
     width: "100%",
     position: "relative",
     overflow: "hidden",
-    height: "800px",
+    height: "900px",
 }
 
 const banner = {
@@ -24,18 +25,76 @@ const banner = {
 @observer
 export default class Home extends Component{
 
+    constructor(){
+        super()
+        this.init()
+    }
+
+    init(){
+        alert("init")
+        this.loadPosters()
+        alert("init2")
+    }
+
+    loadPosters(){
+        //TODO base url
+        fetch("http://localhost:8080" + "/api/v1/manage/poster", {
+            method: 'GET'
+        }).then(resp=> {
+            resp.json().then(json=>{
+                this.props.rootStore.homeStore.posters = json
+            })
+        }).catch((error)=>{
+            this.showAlert("接口调用异常！")
+        })
+    }
+
+
 
     render(){
+        this.data = this.props.rootStore.homeStore;
+        this.config = this.props.rootStore.config;
         return (
-            <Card>
-                <CardMedia overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}>
-                    <div style={bannerbox}>
-                        <div style={banner}>
-                            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513696517649&di=6bdc22108d461b246f482645e41ccf46&imgtype=jpg&src=http%3A%2F%2Fimg0.imgtn.bdimg.com%2Fit%2Fu%3D1859455020%2C506700864%26fm%3D214%26gp%3D0.jpg" />
-                        </div>
-                    </div>
-                </CardMedia>
-            </Card>
+            <ReactSwipe
+                key = {3}
+                swipeOptions={{
+                    startSlide: 0,
+                    speed: 400,
+                    auto: 3000,
+                    continuous: true,
+                    disableScroll: false,
+                    stopPropagation: false,
+                    callback: function(index, elem){
+                    },
+                    transitionEnd: function(index,elem){
+                    }
+                }}>
+                {
+                    this.props.rootStore.homeStore.postersg.map(poster=>{
+                        return (
+                            <div className="swipe" >
+                                <Card>
+                                    <CardMedia overlay={<CardTitle title={poster.name} subtitle={poster.description} />}>
+                                        <div style={bannerbox}>
+                                            <div style={banner}>
+                                                <img src={poster.url} />
+                                            </div>
+                                        </div>
+                                    </CardMedia>
+                                </Card>
+                            </div>
+                        )
+                    })
+                }
+            </ReactSwipe>
+
+
+
+
+
+
+
+
         )
     }
 

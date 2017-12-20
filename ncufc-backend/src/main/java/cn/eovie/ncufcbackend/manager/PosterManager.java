@@ -34,6 +34,7 @@ public class PosterManager {
     @Autowired
     private CosManager cosManager;
 
+    //TODO classNotFound gson
     public Result addPost(String name, String postUser, MultipartFile file){
         try {
             //上传图片到腾讯cos

@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
+ * TODO
+ * 增加group、description字段
  * Created by earayu on 2017/11/27.
  */
 @Data

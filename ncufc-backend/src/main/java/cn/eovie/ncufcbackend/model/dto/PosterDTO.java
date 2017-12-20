@@ -1,8 +1,6 @@
 package cn.eovie.ncufcbackend.model.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
@@ -16,7 +14,10 @@ import java.util.Date;
 @Data
 @Builder
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class PosterDTO {
+
 
     /**
      * 主键
