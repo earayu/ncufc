@@ -20,7 +20,7 @@ class UIStore{
             name: "海报上传"
         },
         {
-            url: "PlayerInfo",
+            url: "/HomePlayer",
             name: "球员信息"
         }
     ];
@@ -43,11 +43,17 @@ class UIStore{
 
     @observable cachedPic= null;
 
-    @observable player = {
-        //已选图片，在框中显示
 
+    @observable posters = [
 
-    }
+    ];
+
+    @observable players = [
+
+    ];
+
+    @observable refresh = false
+
 
 
     @computed get showDialog(){

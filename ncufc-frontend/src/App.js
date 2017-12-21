@@ -7,6 +7,7 @@ import SideBar from "./component/SideBar";
 import { Link, Route, Switch } from 'react-router-dom';
 import PosterUpload from './component/PosterUpload'
 import Home from './component/Home'
+import HomePlayer from './component/HomePlayer'
 
 injectTapEventPlugin();
 
@@ -26,11 +27,12 @@ class App extends Component {
     return (
         <div className="App" style={AppStyle.app}>
             <MuiThemeProvider  >
-                <HeadBar store={this.props.store}/>
-                <SideBar store={this.props.store}/>
+                <HeadBar/>
+                <SideBar/>
                 {/*<Content store={this.props.store}/>*/}
 
                 <Route exact={true} path="/" component={Home}/>
+                <Route path="/HomePlayer" component={HomePlayer}/>
                 <Route path="/PosterUpload" component={PosterUpload}/>
 
             </MuiThemeProvider>

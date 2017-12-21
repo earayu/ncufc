@@ -1,6 +1,6 @@
 import { observable, computed } from "mobx"
 
-export default class HomeStore{
+class HomeStore{
     constructor(rootStore){
         this.rootStore = rootStore;
     }
@@ -13,6 +13,12 @@ export default class HomeStore{
      */
     @observable posters = [
 
-    ]
+    ];
+
+
+
+    @observable refresh = true
 
 }
+
+export default HomeStore
