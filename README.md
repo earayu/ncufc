@@ -6,8 +6,22 @@
 
 ## 前端
 
-react+mobx
+react
+
+mobx
+
+swipe
 
 ## 后端
 
-spring全家桶
+springboot
+
+springmvc
+
+spring data
+
+mongodb
+
+## 部署
+
+腾讯云
